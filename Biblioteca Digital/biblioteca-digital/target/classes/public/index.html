@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblioteca Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4a6fa5;
+      --secondary: #166088;
+      --accent: #4fc3f7;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --success: #28a745;
+      --danger: #dc3545;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+      font-family: 'Poppins', sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding: 2rem 0;
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+    
+    h1 {
+      font-family: 'Playfair Display', serif;
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 50%;
+      height: 3px;
+      background: var(--accent);
+    }
+    
+    section {
+      background: white;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+    }
+    
+    section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .input-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+    
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.2);
+    }
+    
+    button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    button:hover {
+      background-color: var(--secondary);
+      transform: translateY(-2px);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    button i {
+      font-size: 1rem;
+    }
+    
+    #livros, #resultadoTitulo, #resultadoAutor, #statusResultado {
+      margin-top: 1.5rem;
+    }
+    
+    .book-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      border-left: 4px solid var(--accent);
+      transition: var(--transition);
+    }
+    
+    .book-card:hover {
+      transform: translateX(5px);
+    }
+    
+    .book-card h3 {
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .book-card p {
+      margin-bottom: 0.3rem;
+      color: #666;
+    }
+    
+    .status {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    
+    .read {
+      background-color: rgba(40, 167, 69, 0.1);
+      color: var(--success);
+    }
+    
+    .unread {
+      background-color: rgba(220, 53, 69, 0.1);
+      color: var(--danger);
+    }
+    
+    .image-section {
+      text-align: center;
+      padding: 2.5rem;
+    }
+    
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .section-header i {
+      font-size: 1.8rem;
+      color: var(--accent);
+    }
+    
+    .image-container {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .image-container img {
+      max-height: 500px;
+      object-fit: contain;
+      border: 1px solid #eee;
+    }
+    
+    .image-caption {
+      margin-top: 1rem;
+      font-style: italic;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    .btn-danger {
+      background-color: var(--danger);
+    }
+    
+    .btn-danger:hover {
+      background-color: #c82333;
+    }
+    
+    .btn-success {
+      background-color: var(--success);
+    }
+    
+    .btn-success:hover {
+      background-color: #218838;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      section {
+        padding: 1.5rem;
+      }
+      
+      .image-section {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-book-open"></i> Biblioteca Digital</h1>
+      <p>Gerencie sua coleção de livros de forma simples e elegante</p>
+    </header>
+    
+    <div class="grid">
+      <section>
+        <h2><i class="fas fa-plus-circle"></i> Adicionar Livro</h2>
+        <div class="input-group">
+          <input id="titulo" placeholder="Título" />
+        </div>
+        <div class="input-group">
+          <input id="autor" placeholder="Autor" />
+        </div>
+        <div class="input-group">
+          <input id="ano" placeholder="Ano" />
+        </div>
+        <button onclick="adicionarLivro()"><i class="fas fa-plus"></i> Adicionar</button>
+      </section>
+      
+      <section>
+        <h2><i class="fas fa-search"></i> Buscar por Título</h2>
+        <div class="input-group">
+          <input id="buscaTitulo" placeholder="Digite o título" />
+        </div>
+        <button onclick="buscarPorTitulo()"><i class="fas fa-search"></i> Buscar</button>
+        <div id="resultadoTitulo"></div>
+      </section>
+    </div>
+    
+    <div class="grid">
+      <section>
+        <h2><i class="fas fa-search"></i> Buscar por Autor</h2>
+        <div class="input-group">
+          <input id="buscaAutor" placeholder="Digite o autor" />
+        </div>
+        <button onclick="buscarPorAutor()"><i class="fas fa-search"></i> Buscar</button>
+        <div id="resultadoAutor"></div>
+      </section>
+      
+      <section>
+        <h2><i class="fas fa-check-circle"></i> Verificar Status</h2>
+        <div class="input-group">
+          <input id="tituloStatus" placeholder="Título do livro" />
+        </div>
+        <button onclick="verificarStatus()"><i class="fas fa-question-circle"></i> Verificar</button>
+        <div id="statusResultado"></div>
+      </section>
+    </div>
+    
+    <div class="grid">
+      <section>
+        <h2><i class="fas fa-bookmark"></i> Marcar Como Lido</h2>
+        <div class="input-group">
+          <input id="tituloLido" placeholder="Título do livro" />
+        </div>
+        <div class="input-group">
+          <select id="statusLido">
+            <option value="true">Lido</option>
+            <option value="false">Não Lido</option>
+          </select>
+        </div>
+        <button onclick="marcarComoLido()"><i class="fas fa-sync-alt"></i> Atualizar Status</button>
+      </section>
+      
+      <section>
+        <h2><i class="fas fa-trash-alt"></i> Excluir Livro</h2>
+        <div class="input-group">
+          <input id="tituloExcluir" placeholder="Título do livro" />
+        </div>
+        <button class="btn-danger" onclick="excluirLivro()"><i class="fas fa-trash"></i> Excluir</button>
+      </section>
+    </div>
+    
+    <section>
+      <h2><i class="fas fa-list"></i> Acervo</h2>
+      <div class="botao-container"><button class="btn-atualizar" onclick="listarLivros()"><i class="fas fa-sync"></i> Atualizar Lista</button></div>
+      <div class="campo">
+        <label for="acervo">Acervo:</label>
+        <div id="livros" class="resultado-consulta"></div>
+      </div>
+    </section>
+    
+    <section class="image-section">
+      <div class="section-header">
+        <i class="fas fa-project-diagram"></i>
+        <h2>Visualização de Superpixels</h2>
+      </div>
+      <div class="image-container">
+        <img src="static/superpixel_resultado.jpg" alt="Resultado de processamento com superpixels">
+        <p class="image-caption">Processamento de imagem utilizando técnica de superpixels</p>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+
+  <script>
+    function excluirLivro() {
+      const titulo = document.getElementById('tituloExcluir').value;
+      fetch(`/livros/${encodeURIComponent(titulo)}`, {
+        method: 'DELETE'
+      })
+      .then(res => res.text())
+      .then(alert)
+      .catch(err => alert("Erro ao excluir livro: " + err));
+    }
+    
+    // Função auxiliar para criar elementos de livro
+    function createBookElement(book) {
+      const bookElement = document.createElement('div');
+      bookElement.className = 'book-card';
+      bookElement.innerHTML = `
+        <h3>${book.titulo}</h3>
+        <p><strong>Autor:</strong> ${book.autor}</p>
+        <p><strong>Ano:</strong> ${book.ano}</p>
+        <p><strong>Status:</strong> <span class="status ${book.lido ? 'read' : 'unread'}">${book.lido ? 'Lido' : 'Não Lido'}</span></p>
+      `;
+      return bookElement;
+    }
+  </script>
+</body>
+</html>
